@@ -89,7 +89,7 @@ public class RDFIndexTest {
             assertNotNull(xquery);
 
             String query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT $x WHERE {$x a rdf:Property }";
-            Sequence seq = xquery.execute(broker, "import module namespace sparql=\"http://exist-db.org/xquery/sparql\"; sparql:query(\"" + query + "\")",
+            Sequence seq = xquery.execute(broker, transaction, "import module namespace sparql=\"http://exist-db.org/xquery/sparql\"; sparql:query(\"" + query + "\")",
                     null);
             assertNotNull(seq);
             assertEquals(1, seq.getItemCount());
@@ -118,7 +118,7 @@ public class RDFIndexTest {
             Sequence seq = null;
 
             try {
-                seq = xquery.execute(broker, "import module namespace sparql=\"http://exist-db.org/xquery/sparql\"; sparql:query(\"" + query + "\")", null);
+                seq = xquery.execute(broker, transaction, "import module namespace sparql=\"http://exist-db.org/xquery/sparql\"; sparql:query(\"" + query + "\")", null);
             } catch (XPathException ex) {
                 expectedException = ex;
             }

@@ -167,7 +167,7 @@ public class TDBIndexWorker implements IndexWorker {
     }
 
     @Override
-    public void flush() {
+    public void flush(final Txn transaction) {
         if (currentDoc == null)
             return;
 
@@ -196,7 +196,7 @@ public class TDBIndexWorker implements IndexWorker {
     }
 
     @Override
-    public void removeCollection(Collection collection, DBBroker broker, boolean reindex) throws PermissionDeniedException {
+    public void removeCollection(Collection collection, DBBroker broker, final Txn transaction, boolean reindex) throws PermissionDeniedException {
         RDFIndexConfig cfg = getIndexConfig(collection);
         if (cfg != null) {
 	    try {

@@ -19,6 +19,7 @@ import org.exist.indexing.RawBackupSupport;
 import org.exist.storage.BrokerPool;
 import org.exist.storage.DBBroker;
 import org.exist.storage.btree.DBException;
+import org.exist.storage.txn.Txn;
 import org.exist.util.DatabaseConfigurationException;
 //import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -65,7 +66,7 @@ public class TDBRDFIndex extends RDFIndex implements RawBackupSupport {
     }
 
     @Override
-    public void sync() throws DBException {
+    public void sync(final Txn transaction) throws DBException {
         if (connection != null) {
             connection.flush();
         }
@@ -73,7 +74,7 @@ public class TDBRDFIndex extends RDFIndex implements RawBackupSupport {
     }
 
     @Override
-    public void remove() throws DBException {
+    public void remove(final Txn transaction) throws DBException {
 	close();
 	try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
 	    for (Path file : stream) {
